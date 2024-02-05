@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Week0_백준_1592_유서현 {
+public class Week000_백준_1592_유서현 {
 	public static void main(String[] args) {
 		
 		// 스캐너 객체 생성
