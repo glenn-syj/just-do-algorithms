@@ -11,7 +11,7 @@
 - **박건택**(qkrrjsxor)
 - **손영준**(glenn-syj)         
 - **송창용**(undeadtimo)
-- **유서현**(ucream11)
+- **유서현**(ucream-sh)
 - **표다영**(celestedayoung)
 - **황민욱**(minukHwang)
 
