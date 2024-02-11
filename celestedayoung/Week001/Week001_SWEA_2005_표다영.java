@@ -21,7 +21,7 @@ public class Solution {
 		int tc = sc.nextInt();
 		
 		for (int t = 1; t <= tc; t++) {
-			
+
 			int row = sc.nextInt();
 
 			// 2차원 배열 초기화 시, 행의 길이만 지정: 행이 증가함에 따라 열의 길이를 가변적으로 추가하기 위함이다.
@@ -33,7 +33,7 @@ public class Solution {
 			
 			for (int r = 0; r < row; r++) {
 				for (int c = 0; c <= r; c++) {
-					
+
 					// r < 2일 때는 요소가 항상 1
 					if (r < 2) {
 						triangle[r][c] = 1;

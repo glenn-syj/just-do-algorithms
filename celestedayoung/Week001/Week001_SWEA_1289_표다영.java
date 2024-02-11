@@ -30,12 +30,13 @@ public class Solution {
 			int length = forLength.length();
 			int[] testCase = new int[length];
 			int[] initial = new int[length];
-			
+
 			// test case를 String으로 받았으므로 int로 바꿔주기: '0'은 char type이므로 char - '0'은 ASCII Code로 계산되어 int로 바꿀 수 있다.
 			for (int i = 0; i < length; i++) {
 				testCase[i] = forLength.charAt(i) - '0';
 			}
-			
+
+		
 			int cnt = 0;
 			for (int i = 0; i < length; i++) {
 				

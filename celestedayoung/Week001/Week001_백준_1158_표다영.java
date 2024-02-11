@@ -18,62 +18,61 @@
  *          계속 진행하다가 살아있는 사람을 만났을 때만 count하고, count가 n번이 되면 죽이도록 한다.
  */      
 
-import java.util.Arrays;
-import java.util.Scanner;
-
-public class Main {
-    public static void main(String[] args) {
-
-        Scanner sc = new Scanner(System.in);
-
-        int peopleNum = sc.nextInt();
-        int killNum = sc.nextInt();
-
-        int[] peopleList = new int[peopleNum];
-        for (int i = 0; i < peopleNum; i++) {
-            peopleList[i] = i + 1;
-        }
-
-        int[] josephus  = new int[peopleNum];
-        // 1번(peopleList[0])부터 첫 번째 사람이 되어야 하므로 -1부터 시작해서 killNum칸 이동해야 죽일 사람에게 도착한다.
-        int idx  = -1;
-
-        for (int k = 0; k < peopleNum; k++) {
-            // 살아있는 사람을 만났을 때만 count하는 변수
-            int idxCnt = 0;
-            
-            // idxCnt가 죽일 사람의 번호가 되면 해당 사람을 죽이도록 한다.
-            while (idxCnt < killNum) {
-                // idx가 peopleList의 index를 초과하면 0으로 초기화
-                if (idx >= peopleNum - 1) {
-                    idx -= peopleNum;
-                }
-                idx++;
-                // 살아있는 사람을 만나면 idxCnt 증가
-                if (peopleList[idx] != 0) {
-                    idxCnt++;
-                }
-            }
-            josephus[k] = peopleList[idx];
-            // 죽인 사람은 0으로 바꾼다.
-            peopleList[idx] = 0;
-        }
-
-        // 출력 형식은 < 죽은 사람들 >
-        for (int i = 0; i < peopleList.length; i++) {
-            // 만약 입력이 '1, 1'일 경우 출력 형식 유의
-            if (josephus.length == 1) {
-                System.out.print("<" + josephus[0] + ">");
-            } else {
-                if (i == peopleList.length - 1) {
-                    System.out.print(josephus[i] + ">");
-                } else if (i == 0) {
-                    System.out.print("<"+ josephus[i] + ", ");
-                } else {
-                    System.out.print(josephus[i] + ", ");
-                }
-            }
-        }
-    }
-}
-
+ import java.util.Arrays;
+ import java.util.Scanner;
+ 
+ public class Main {
+     public static void main(String[] args) {
+ 
+         Scanner sc = new Scanner(System.in);
+ 
+         int peopleNum = sc.nextInt();
+         int killNum = sc.nextInt();
+ 
+         int[] peopleList = new int[peopleNum];
+         for (int i = 0; i < peopleNum; i++) {
+             peopleList[i] = i + 1;
+         }
+ 
+         int[] josephus  = new int[peopleNum];
+         // 1번(peopleList[0])부터 첫 번째 사람이 되어야 하므로 -1부터 시작해서 killNum칸 이동해야 죽일 사람에게 도착한다.
+         int idx  = -1;
+ 
+         for (int k = 0; k < peopleNum; k++) {
+             // 살아있는 사람을 만났을 때만 count하는 변수
+             int idxCnt = 0;
+ 
+             // idxCnt가 죽일 사람의 번호가 되면 해당 사람을 죽이도록 한다.
+             while (idxCnt < killNum) {
+                 // idx가 peopleList의 index를 초과하면 0으로 초기화
+                 if (idx >= peopleNum - 1) {
+                     idx -= peopleNum;
+                 }
+                 idx++;
+                 // 살아있는 사람을 만나면 idxCnt 증가
+                 if (peopleList[idx] != 0) {
+                     idxCnt++;
+                 }
+             }
+             josephus[k] = peopleList[idx];
+             // 죽인 사람은 0으로 바꾼다.
+             peopleList[idx] = 0;
+         }
+ 
+         // 출력 형식은 < 죽은 사람들 >
+         for (int i = 0; i < peopleList.length; i++) {
+             // 만약 입력이 '1, 1'일 경우 출력 형식 유의
+             if (josephus.length == 1) {
+                 System.out.print("<" + josephus[0] + ">");
+             } else {
+                 if (i == peopleList.length - 1) {
+                     System.out.print(josephus[i] + ">");
+                 } else if (i == 0) {
+                     System.out.print("<"+ josephus[i] + ", ");
+                 } else {
+                     System.out.print(josephus[i] + ", ");
+                 }
+             }
+         }
+     }
+ }
