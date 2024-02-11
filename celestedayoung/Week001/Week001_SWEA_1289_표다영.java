@@ -17,16 +17,16 @@ import java.util.Scanner;
 
 public class Solution {
 	public static void main(String[] args) {
-
+		
 		Scanner sc = new Scanner(System.in);
-
+		
 		int testNum = sc.nextInt();
-
+		
 		for (int t = 1; t <= testNum; t++) {
-
+			
 			// test case 받기: int type으로 받으면 맨 앞에 0이 사라지므로 String type으로 받아서 형태를 유지한다. 
 			String forLength = sc.next();
-
+			
 			int length = forLength.length();
 			int[] testCase = new int[length];
 			int[] initial = new int[length];
@@ -36,9 +36,10 @@ public class Solution {
 				testCase[i] = forLength.charAt(i) - '0';
 			}
 
+		
 			int cnt = 0;
 			for (int i = 0; i < length; i++) {
-
+				
 				// 초기값과 test case 값이 다를 때 
 				if (testCase[i] != initial[i]) {
 					cnt++;
@@ -52,4 +53,3 @@ public class Solution {
 		}
 	}	
 }
-

@@ -1,4 +1,3 @@
-
 /*
  * SWEA_2005. 파스칼의 삼각형
  * 	- Logic
@@ -16,22 +15,22 @@ import java.util.Scanner;
 
 public class Solution {
 	public static void main(String[] args) {
-
+		
 		Scanner sc = new Scanner(System.in);
-
+		
 		int tc = sc.nextInt();
-
+		
 		for (int t = 1; t <= tc; t++) {
 
 			int row = sc.nextInt();
 
 			// 2차원 배열 초기화 시, 행의 길이만 지정: 행이 증가함에 따라 열의 길이를 가변적으로 추가하기 위함이다.
 			int[][] triangle = new int[row][];
-
+			
 			for (int r = 0; r < row; r++) {
 				triangle[r] = new int[r + 1];
 			}
-
+			
 			for (int r = 0; r < row; r++) {
 				for (int c = 0; c <= r; c++) {
 
