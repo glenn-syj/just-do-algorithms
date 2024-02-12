@@ -1,4 +1,4 @@
-package Week002_백준_11399_황민욱;
+package boj_11399_황민욱;
 
 import java.util.Arrays;
 import java.util.Scanner;

@@ -1,4 +1,4 @@
-package Week002_SWEA_7236_황민욱;
+package swea_7236_황민욱;
 
 import java.util.Scanner;
 
