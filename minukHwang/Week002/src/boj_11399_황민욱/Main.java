@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 /*
- * 풀이방법
+ * [문제 풀이 과정]
  * 1. 그리디 알고리즘 문제
  * 2. 일단 정렬한다.
  * 3. 앞에서 부터 더하고... 더하고... 누적해서 다 더한다.
