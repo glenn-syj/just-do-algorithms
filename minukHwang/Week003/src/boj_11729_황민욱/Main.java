@@ -1,24 +1,35 @@
 package boj_11729_황민욱;
 
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
 
 public class Main {
-	
-	// 어떠한 변수...........
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		
-		int N = sc.nextInt();
-		
-		hanoiTower(1, 3, N);
+	static int count = 0;
+	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out), 1 << 25);
+
+	public static void main(String[] args) throws IOException {
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		int N = Integer.parseInt(st.nextToken());
+
+		hanoiTower(N, 1, 3, 2);
+		System.out.println(count);
+		bw.flush();
 	}
-	
-	public static int hanoiTower(int from, int to, int count) {
-		if(count == 1) {
-			System.out.printf("%d %d\n", from, to);
+
+	public static void hanoiTower(int n, int from, int to, int other) throws IOException {
+		count++;
+		if (n == 1) {
+			bw.write(from + " " + to + "\n");
+			return;
 		}
-		
-		to = 6 - from -  to;
-		return hanoiTower(from , to, --count);
+
+		hanoiTower(n - 1, from, other, to);
+		bw.write(from + " " + to + "\n");
+		hanoiTower(n - 1, other, to, from);
 	}
 }
