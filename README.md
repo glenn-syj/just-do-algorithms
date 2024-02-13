@@ -1,5 +1,7 @@
 # What is just-do-algorithms?
 
+**최종 수정일: 2024/02/11**
+
 ## 1. Organization
 
 ### 1-1. Introduction
@@ -11,7 +13,7 @@
 - **박건택**(qkrrjsxor)
 - **손영준**(glenn-syj)         
 - **송창용**(undeadtimo)
-- **유서현**(ucream11)
+- **유서현**(ucream-sh)
 - **표다영**(celestedayoung)
 - **황민욱**(minukHwang)
 
@@ -30,20 +32,22 @@
 
 ### 2-2. Submission
 
-**File Format**
+**Project/Pacakge/File Format**
 
 ```java
-1. 코드 내 주석 처리: .java 파일만 제출
+📂 Week{주차} // project
+ └── 📂 src
+         └── 📦 {platform}_{problem no.}_{your name} // package
+                      └── 📄 Solution.java
+                      └── 📄 Solution.pdf
+ex)      └── 📦 boj_1234_손영준
+                      └── 📄 Solution.java
+                      └── 📄 Solution.pdf
 
-		파일명: "<Week>_<Platform>_문제번호_성함.java"
-		cf) Week0_SWEA_1234_손영준.java
+Week{주차}: Week000, Week001, Week002, ...
+{platform}: swea, boj, leetcode, ... (소문자임에 유의!)
 
-2. 종이에 작성: .java파일과 함께 수기 자료 제출
-
-		파일명: "<Week>_<Platform>_문제번호_성함.png/pdf/..."
-		(기본 방식은 자바와 동일)
 ```
-
 
 **Fork and Pull Request**
 
