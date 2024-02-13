@@ -7,9 +7,6 @@ import java.util.Scanner;
 public class Week001_SWEA_4698_황민욱 {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-        
-        // 에라토스테네스의 체로 소수 판별(참조) 배열 만들어주기.
-		boolean[] isNotPrime = primeNumberSieve(100000);
 
 		int T = sc.nextInt();
 
@@ -22,7 +19,10 @@ public class Week001_SWEA_4698_황민욱 {
 			int a = sc.nextInt();
 			int b = sc.nextInt();
 
-			// 3. 최종적으로 조건에 맞는 수의 갯수를 count.
+			// 3. 에라토스테네스의 체로 소수 판별(참조) 배열 만들어주기.
+			boolean[] isNotPrime = primeNumberSieve(b);
+
+			// 4. 최종적으로 조건에 맞는 수의 갯수를 count.
 			int count = 0;
 
 			for (int i = a; i <= b; i++) {
