@@ -1,19 +1,20 @@
 package boj_11279_황민욱;
 
+
 class MaxHeap {
 	int[] heap; // 배열
 	int size;
 	int maxSize;
 
 	public MaxHeap() {
-
+		
 	}
 
 	public MaxHeap(int maxSize) {
 		this.maxSize = maxSize;
 		this.size = 0;
 		heap = new int[this.maxSize + 1];
-		heap[0] = Integer.MAX_VALUE;
+		heap[0] = -1; // 
 	}
 
 	private int parent(int pos) {
