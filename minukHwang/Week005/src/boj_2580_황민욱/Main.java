@@ -1,154 +1,96 @@
 package boj_2580_황민욱;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 public class Main {
 	static int[][] map;
 	static List<int[]> blanks;
-	static int[] rowCount;
-	static int[] colCount;
-	static int[][] sqrCount;
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		map = new int[9][9];
 		blanks = new ArrayList<>();
-		rowCount = new int[9];
-		colCount = new int[9];
-		sqrCount = new int[3][3];
 
 		for (int r = 0; r < 9; r++) {
 			for (int c = 0; c < 9; c++) {
 				map[r][c] = sc.nextInt();
 				if (map[r][c] == 0) {
 					int[] blank = { r, c };
-					// blanks.add(blank);
-					rowCount[r]++;
-					colCount[c]++;
-					sqrCount[r / 3][c / 3]++;
+					blanks.add(blank);
 				}
 			}
 		}
 
-//		System.out.println(Arrays.toString(rowCount));
-//		System.out.println(Arrays.toString(colCount));
-//		System.out.println(Arrays.deepToString(sqrCount));
+		sudoku(0);
+	}
 
-		for (int r = 0; r < 9; r++) {
-			if (rowCount[r] == 1) {
-				int blankR = 0;
-				int blankC = 0;
-				int[] count = new int[10];
-
-				for (int c = 0; c < 9; c++) {
-					if (map[r][c] == 0) {
-						blankR = r;
-						blankC = c;
-						continue;
-					}
-					count[map[r][c]]++;
-				}
-
-				for (int i = 1; i < 10; i++) {
-					if (count[i] == 0) {
-						map[blankR][blankC] = i;
-					}
-				}
-
-				rowCount[blankR]--;
-				colCount[blankC]--;
-				sqrCount[blankR / 3][blankC / 3]--;
-
-			}
-		}
-//		printMap();
-
-//		System.out.println(Arrays.toString(rowCount));
-//		System.out.println(Arrays.toString(colCount));
-//		System.out.println(Arrays.deepToString(sqrCount));
-
-		for (int c = 0; c < 9; c++) {
-			if (colCount[c] == 1) {
-				int blankR = 0;
-				int blankC = 0;
-				int[] count = new int[10];
-
-				for (int r = 0; r < 9; r++) {
-					if (map[r][c] == 0) {
-						blankR = r;
-						blankC = c;
-						continue;
-					}
-					count[map[r][c]]++;
-				}
-
-				for (int i = 1; i < 10; i++) {
-					if (count[i] == 0) {
-						map[blankR][blankC] = i;
-					}
-				}
-
-				rowCount[blankR]--;
-				colCount[blankC]--;
-				sqrCount[blankR / 3][blankC / 3]--;
-
-			}
+	public static void sudoku(int index) {
+		// 기저 조건
+		if (index == blanks.size()) {
+			printMap();
+			System.exit(0);
 		}
 
-//		printMap();
+		// 재귀 조건
+		// 한 행씩 확인하기
+		int blankR = blanks.get(index)[0];
+		int blankC = blanks.get(index)[1];
 
-//		System.out.println(Arrays.toString(rowCount));
-//		System.out.println(Arrays.toString(colCount));
-//		System.out.println(Arrays.deepToString(sqrCount));
-
-		for (int i = 0; i < 3; i++) {
-			for (int j = 0; j < 3; j++) {
-				if (sqrCount[i][j] == 1) {
-					int blankR = 0;
-					int blankC = 0;
-					int[] count = new int[10];
-
-					for (int r = i * 3; r < (i + 1) * 3; r++) {
-						for (int c = j * 3; c < (j + 1) * 3; c++) {
-							if(map[r][c]==0) {
-								blankR = r;
-								blankC = c;
-								continue;
-							}
-							count[map[r][c]]++;
-						}
-					}
-					
-					for(int k = 1; k < 10; k++) {
-						if(count[k] == 0) {
-							map[blankR][blankC] = k;
-						}
-					}
-					
-					rowCount[blankR]--;
-					colCount[blankC]--;
-					sqrCount[blankR / 3][blankC / 3]--;
-				}
+		for (int num = 1; num < 10; num++) {
+			// 만약 조건에 맞는다면
+			if (check(blankR, blankC, num)) {
+				map[blankR][blankC] = num;
+				sudoku(index + 1);
+				map[blankR][blankC] = 0;
 			}
 		}
 		
-		printMap();
+	}
 
-//		System.out.println(Arrays.toString(rowCount));
-//		System.out.println(Arrays.toString(colCount));
-//		System.out.println(Arrays.deepToString(sqrCount));
+	// 가능 여부 파악
+	public static boolean check(int rIndex, int cIndex, int value) {
 
+		// 행 확인
+		for (int c = 0; c < 9; c++) {
+			if (map[rIndex][c] == value) {
+				return false;
+			}
+		}
+
+		// 열 확인
+		for (int r = 0; r < 9; r++) {
+			if (map[r][cIndex] == value) {
+				return false;
+			}
+		}
+
+		// 3*3 확인
+		for (int r = (rIndex / 3) * 3; r < (rIndex / 3 + 1) * 3; r++) {
+			for (int c = (cIndex / 3) * 3; c < (cIndex / 3 + 1) * 3; c++) {
+				if (map[r][c] == value) {
+					return false;
+				}
+			}
+		}
+
+		return true;
 	}
 
 	public static void printMap() {
+		StringBuilder sb = new StringBuilder();
+
 		for (int r = 0; r < 9; r++) {
 			for (int c = 0; c < 9; c++) {
-				System.out.print(map[r][c] + " ");
+				if (c == 8) {
+					sb.append(map[r][c]).append("\n");
+					break;
+				}
+				sb.append(map[r][c]).append(" ");
 			}
-			System.out.println();
 		}
+
+		System.out.println(sb);
 	}
 }
