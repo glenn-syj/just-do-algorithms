@@ -87,13 +87,14 @@ public class Main2 {
 								lab[r2][c2] = 1;
 								lab[r3][c3] = 1;
 								
-								for (int i = 0; i < N; i++) {
-									for (int t = 0; t < M; t++) {
-										System.out.print(lab[i][t] + " ");
-									}
-									System.out.println();
-								}
-								System.out.println();
+//								for (int i = 0; i < N; i++) {
+//									for (int t = 0; t < M; t++) {
+//										System.out.print(lab[i][t] + " ");
+//									}
+//									System.out.println();
+//								}
+//								System.out.println();
+								
 								countVirus();
 								
 								lab[r1][c1] = 0;
@@ -144,6 +145,14 @@ public class Main2 {
 
 			}
 		}
+		
+		for (int i = 0; i < N; i++) {
+			for (int t = 0; t < M; t++) {
+				System.out.print(labcopy[i][t] + " ");
+			}
+			System.out.println();
+		}
+		System.out.println();
 		
 		int temp = 0;
 		for (int i = 0; i < N; i++) {

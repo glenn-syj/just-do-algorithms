@@ -27,7 +27,7 @@ public class Main {
 	static boolean[][] visited;
 	static int safe;
 	static int N, M;
-//	static List<int[]> virus;	//바이러스 위치를 저장할 리스트
+	static List<int[]> virus;	//바이러스 위치를 저장할 리스트
 
 	static int[] dr = { -1, 0, 1, 0 };
 	static int[] dc = { 0, 1, 0, -1 }; // 상 우 하 좌
@@ -38,7 +38,7 @@ public class Main {
 		StringTokenizer st;
 
 		String str;
-//		virus = new ArrayList<>();
+		virus = new ArrayList<>();
 
 		str = br.readLine();
 		st = new StringTokenizer(str);
@@ -60,7 +60,7 @@ public class Main {
 
 				if (tmp == 2) { // 바이러스의 위치를 길이 2 배열로 리스트에 저장
 					int[] coor = new int[] { i, t };
-					queue.offer(coor);
+					virus.add(coor);
 				}
 			}
 		}
@@ -107,6 +107,8 @@ public class Main {
 
 	public static void countVirus() {
 
+		labcopy = new int[N][M];
+		
 		//벽 세워진 경우들에 대해 bfs 돌아보자, bfs 표시 & 경계용 labcopy
 		for(int i = 0; i< N; i++) {
 			for(int t= 0; t< M; t++) {
@@ -118,8 +120,9 @@ public class Main {
 		//BFS 시작
 		while (!queue.isEmpty()) {
 
-			int curR = queue.poll()[0];
-			int curC = queue.poll()[1];
+			int[] loc = queue.poll();
+			int curR = loc[0];
+			int curC = loc[1];
 
 			for (int dir = 0; dir < 4; dir++) {
 				int newR = curR + dr[dir];
@@ -131,6 +134,9 @@ public class Main {
 				
 				if(labcopy[newR][newC] == 0) {
 					labcopy[newR][newC] = 2;
+					
+					loc = new int[] {newR, newC};
+					queue.offer(loc);
 				}
 
 			}
