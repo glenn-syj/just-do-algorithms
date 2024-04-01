@@ -54,7 +54,7 @@ public class Main {
 			}
 		
 		}
-		dp[10] = Math.min(dp[9], dp[5]) +1;
+		dp[10] = Math.min(dp[9], dp[5]) +1;		
 		
 		System.out.println(Arrays.toString(dp));
 	}
