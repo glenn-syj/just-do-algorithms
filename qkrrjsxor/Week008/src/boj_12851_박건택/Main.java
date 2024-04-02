@@ -26,7 +26,6 @@ public class Main {
 		StringTokenizer st;
 
 		int[] time = new int[100001];
-		boolean[] visited = new boolean[100001];
 
 		st = new StringTokenizer(br.readLine());
 
