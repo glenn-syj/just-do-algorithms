@@ -69,7 +69,6 @@ public class Main {
 			pq.addAll(adjList[e.end]);
 		}
 		
-//		System.out.println(Arrays.toString(dist));
 		System.out.println(ans);
 	}
 }
