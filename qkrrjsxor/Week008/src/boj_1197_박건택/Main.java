@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -34,42 +35,40 @@ public class Main {
 			int value = Integer.parseInt(st.nextToken());
 			
 			adjList[start].add(new Edge(start, end, value));
+			adjList[end].add(new Edge(end, start, value));
 		}
 
 		// ---------여기까지 인접리스트 입력----------
 		// ---------아래부터 프림 알고리즘----------
 
 		// 필요한것 : visited, dist
-		boolean[] visited = new boolean[V + 1];
-		int[] dist = new int[V + 1];
+		boolean[] visited = new boolean[V+1];
+		PriorityQueue<Edge> pq = new PriorityQueue<>();
 
-		// dist를 최대값으로 초기화
-		int INF = Integer.MAX_VALUE;
-		Arrays.fill(dist, INF);
-
-		// 1번 노드부터 시작
-		dist[1] = 0;
-
-		// 1번 노드부터 V번 노드까지 돌면서 방문하지 않고, dist가 제일 작은 놈 찾기
-		for (int i = 1; i < V + 1; i++) {
-			int min = INF;
-			int idx = 0;
-			if (!visited[i] && dist[i] < min) {
-				min = dist[i];
-				idx = i;
-			}
-
-			// 해당 노드 방문처리
-			visited[i] = true;
-
-			// 해당 노드에 인접하면서, 방문하지 않았고, 현재 dist 값보다 작은 가중치를 가진놈 찾아서 갱신하기
-			for (int j = 1; j < V + 1; j++) {
-				if (adjList[j].get() && !visited[j] && adjList[idx].get(INF)) {
-
-				}
-			}
+		//0번 노드부터 시작
+		visited[1] = true;
+		
+		//0번 노드와 인접한 놈들 다 넣기
+		for(Edge e : adjList[1]) {
+			pq.add(e);
 		}
 
+		int pick = 1;
+		int ans = 0;
+		
+		while(pick != V) {
+			Edge e = pq.poll();
+			
+			if(visited[e.end]) continue;
+			
+			ans += e.value;
+			
+			visited[e.end] = true;
+			pick++;
+			
+			pq.addAll(adjList[e.end]);
+		}
+		
 //		System.out.println(Arrays.toString(dist));
 		System.out.println(ans);
 	}
