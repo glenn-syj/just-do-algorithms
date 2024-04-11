@@ -1,4 +1,4 @@
-package swea_5644_무선충전;
+package swea_5644_박건택;
 /*
  * 일단 충전 범위들을 나타내보자
  * 겹치는 범위를 표현하기 위해 List 배열로 각 범위에 미치는 범위의 수를 저장
@@ -16,7 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.StringTokenizer;
 
-public class Solution {
+public class Solution3 {
 	static ArrayList<Integer>[][] map;
 	static List<int[]> chargers; // 충전기들의 범위와 위치와 세기 저장
 	static int[][] pathA;
@@ -91,23 +91,22 @@ public class Solution {
 				mapping(temp);
 			}
 
-			for(int i = 0; i < 10; i++) {
-				for(int t = 0; t < 10; t++) {
-					System.out.print(map[i][t] + " ");
-				}
-				System.out.println();
-			}
+//			for(int i = 0; i < 10; i++) {
+//				for(int t = 0; t < 10; t++) {
+//					System.out.print(map[i][t] + " ");
+//				}
+//				System.out.println();
+//			}
 
 			int[] A = new int[2];
 			int[] B = new int[2];
 			sum = 0;
-			for (int i = 0; i < M + 1; i++) {
+			for (int i = 0; i < M; i++) {
 				A[0] = pathA[i][0];
 				A[1] = pathA[i][1];
 				B[0] = pathB[i][0];
 				B[1] = pathB[i][1];
 
-				System.out.println((i) + " A " + A[0] + " " + A[1] + " B " + B[0] + " " + B[1]);
 				cal(A, B);
 			}
 
@@ -125,34 +124,46 @@ public class Solution {
 				for (int t = 0; t < map[B[0]][B[1]].size(); t++) {
 					if (map[A[0]][A[1]].get(i) == map[B[0]][B[1]].get(t)) {
 						isMax(map[A[0]][A[1]], map[B[0]][B[1]]);
-						System.out.println("same ");
 						return;
 					}
 				}
 			}
 
-		}
-
-		if (map[A[0]][A[1]] != null) {
+			// 두개 다 null 이 아니지만 충전기 영역이 다를 때
 			int max = -1;
 			for (int k = 0; k < map[A[0]][A[1]].size(); k++) {
 				if (map[A[0]][A[1]].get(k) > max) {
 					max = map[A[0]][A[1]].get(k);
 				}
 			}
-			System.out.println("A " + max);
 			sum += max;
-		}
 
-		if (map[B[0]][B[1]] != null) {
-			int max = -1;
+			max = -1;
 			for (int k = 0; k < map[B[0]][B[1]].size(); k++) {
 				if (map[B[0]][B[1]].get(k) > max) {
 					max = map[B[0]][B[1]].get(k);
 				}
 			}
-			System.out.println("B " + max);
 			sum += max;
+		} else {
+
+			if (map[A[0]][A[1]] != null) {
+				int max = -1;
+				for (int k = 0; k < map[A[0]][A[1]].size(); k++) {
+					if (map[A[0]][A[1]].get(k) > max) {
+						max = map[A[0]][A[1]].get(k);
+					}
+				}
+				sum += max;
+			} else if (map[B[0]][B[1]] != null) {
+				int max = -1;
+				for (int k = 0; k < map[B[0]][B[1]].size(); k++) {
+					if (map[B[0]][B[1]].get(k) > max) {
+						max = map[B[0]][B[1]].get(k);
+					}
+				}
+			}
+
 		}
 
 	}
@@ -194,14 +205,9 @@ public class Solution {
 				}
 				return;
 			}
+
 		}
 
-		if(arr1[0]==arr2[0] && arr1[1]==arr2[1]) {
-			sum+=arr1[0];
-			sum+=arr1[1];
-			return;
-		}
-		
 		int max1 = 0;
 		int max2 = 0;
 		if (arr1[0] > arr2[0]) {
@@ -221,14 +227,12 @@ public class Solution {
 			}
 		}
 
-		sum += max1;
-		sum += max2;
-//		if (max1 / 2 > max2) {
-//			sum += max1;
-//		} else {
-//			sum += max1;
-//			sum += max2;
-//		}
+		if (max1 / 2 > max2) {
+			sum += max1;
+		} else {
+			sum += max1;
+			sum += max2;
+		}
 	}
 
 	// 충전기 위치와 범위, 파워를 맵에 나타내는 메서드
@@ -242,7 +246,6 @@ public class Solution {
 		int c = 0;
 		for (int r = (row - range); r <= row; r++) {
 			if (r < 0) {
-				temp++;
 				continue;
 			}
 
@@ -283,7 +286,6 @@ public class Solution {
 		temp = 0;
 		for (int r = (row + range); r > row; r--) {
 			if (r >= 10) {
-				temp++;
 				continue;
 			}
 
