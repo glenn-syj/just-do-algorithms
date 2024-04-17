@@ -52,12 +52,14 @@ public class Main {
 
 		int N = Integer.parseInt(br.readLine());
 
+		//별들의 위치 정보와 union find 하기 위한 부모 노드 배열
 		Star[] star = new Star[N];
 		parent = new int[N+1];
 		
 		for(int i = 0 ;i < N; i++) {
 			parent[i] = i;
-		}
+		}	//make set 초기화
+		
 		//별들 좌표 입력
 		for (int i = 0; i < N; i++) {
 			st = new StringTokenizer(br.readLine());
@@ -79,13 +81,29 @@ public class Main {
 		}
 		
 		double cost = 0;
+		int pick=0;
+//		while (!pq.isEmpty()) {
+//			Edge now = pq.poll();
+//
+//			if (find(now.start) != find(now.end)) {
+//				union(now.start, now.end);
+//				cost += now.cost;
+//			}
+//		}
 		
-		while (!pq.isEmpty()) {
+		for(int i = 0; i < N*(N-1)/2; i++) {
 			Edge now = pq.poll();
-
-			if (find(now.start) != find(now.end)) {
-				union(now.start, now.end);
+			
+			int start = now.start;
+			int end = now.end;
+			if(find(start) != find(end)) {
+				//부모가 다르면 간선을 이어주기
+				union(start,end);
 				cost += now.cost;
+				pick++;
+			}
+			if(pick == (N-1)) {
+				break;
 			}
 		}
 		
@@ -97,19 +115,10 @@ public class Main {
 		if (x == parent[x])
 			return x;
 
-		return parent[x] = find(parent[x]);
+		return find(parent[x]);
 	}
 	
 	public static void union(int x, int y) {
-		x = find(x);
-		y = find(y);
-
-		if (x != y) {
-			if (x < y) {
-				parent[y] = x;
-			} else {
-				parent[x] = y;
-			}
-		}
+		parent[find(y)] = find(x);
 	}
 }
