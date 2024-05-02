@@ -10,8 +10,7 @@ class Shark {
 	int idx;
 	int scent;
 	int dir;
-	int[] priorityR = new int[5];
-	int[] priorityC = new int[5];
+	int[][] priorDir = new int[5][5];
 
 	Shark() {
 
@@ -21,6 +20,12 @@ class Shark {
 		this.isShark = isShark;
 		this.idx = idx;
 		this.scent = scent;
+	}
+
+	@Override
+	public String toString() {
+		return "Shark [isShark=" + isShark + ", idx=" + idx + ", scent=" + scent + ", dir=" + dir + ", priorDir="
+				+ Arrays.deepToString(priorDir) + "]";
 	}
 }
 
@@ -59,25 +64,26 @@ public class Main {
 			}
 		}
 		
-		for(int i = 1; i < 5; i++) {
+		for(int i = 1; i <= M; i++) {
 			int sharkR = sharkCoord[i][0];
 			int sharkC = sharkCoord[i][1];
 			
 			map[sharkR][sharkC].get(0).dir = sc.nextInt();
 		}
 
-		for (int i = 1; i < 5; i++) {
+		for (int i = 1; i <= M; i++) {
 			int sharkR = sharkCoord[i][0];
 			int sharkC = sharkCoord[i][1];
 			
 			for (int j = 1; j < 5; j++) {
 				
 				for(int k = 1; k < 5; k++) {
-					map[sharkR][sharkC].get(0);
-					
+					map[sharkR][sharkC].get(0).priorDir[j][k] = sc.nextInt();
 				}
 			}
 		}
+		
+		System.out.println(map[sharkCoord[1][0]][sharkCoord[1][1]]);
 	}
 
 }
