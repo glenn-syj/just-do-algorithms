@@ -3,10 +3,13 @@ package boj_19237_황민욱;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Scanner;
 
 class Shark {
 	boolean isShark;
+	int r;
+	int c;
 	int idx;
 	int scent;
 	int dir;
@@ -16,15 +19,17 @@ class Shark {
 
 	}
 
-	Shark(boolean isShark, int idx, int scent) {
+	Shark(boolean isShark, int r, int c, int idx, int scent) {
 		this.isShark = isShark;
+		this.r = r;
+		this.c = c;
 		this.idx = idx;
 		this.scent = scent;
 	}
 
 	@Override
 	public String toString() {
-		return "Shark [isShark=" + isShark + ", idx=" + idx + ", scent=" + scent + ", dir=" + dir + ", priorDir="
+		return "Shark [r=" + r + ", c=" + c + ", idx=" + idx + ", scent=" + scent + ", dir=" + dir + ", priorDir="
 				+ Arrays.deepToString(priorDir) + "]";
 	}
 }
@@ -32,10 +37,14 @@ class Shark {
 public class Main {
 	static int N, M, K;
 	static List<Shark>[][] map;
+	static int[][] scent;
+	static int[][] visited;
 	static int[][] sharkCoord;
 
-	int[] deltaR = { 0, -1, 1, 0, 0 };
-	int[] deltaC = { 0, 0, 0, -1, 1 };
+	static Queue<Shark> queue;
+
+	static int[] deltaR = { 0, -1, 1, 0, 0 };
+	static int[] deltaC = { 0, 0, 0, -1, 1 };
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
@@ -45,7 +54,9 @@ public class Main {
 		K = sc.nextInt();
 
 		map = new List[N][N];
+		visited = new int[N][N];
 		sharkCoord = new int[M + 1][2];
+		queue = new LinkedList<>();
 
 		for (int r = 0; r < N; r++) {
 			for (int c = 0; c < N; c++) {
@@ -55,35 +66,101 @@ public class Main {
 				if (idx == 0) {
 					continue;
 				}
-
-				map[r][c].add(new Shark(true, idx, K));
-
-				// 좌표 일단 기억
-				sharkCoord[idx][0] = r;
-				sharkCoord[idx][1] = c;
+				
+				visited[r][c] = idx;
+				scent[r][c] = K;
+				
+				queue.add(new Shark(true, r, c, idx, K));
 			}
 		}
 		
-		for(int i = 1; i <= M; i++) {
-			int sharkR = sharkCoord[i][0];
-			int sharkC = sharkCoord[i][1];
-			
-			map[sharkR][sharkC].get(0).dir = sc.nextInt();
-		}
+		System.out.println(queue);
 
-		for (int i = 1; i <= M; i++) {
-			int sharkR = sharkCoord[i][0];
-			int sharkC = sharkCoord[i][1];
+		for (int i = 0; i < M; i++) {
+			Shark shark = queue.poll();
+
+			shark.dir = sc.nextInt();
+			
+			queue.add(shark);
+		}
+		
+		System.out.println(queue);
+
+		for (int i = 0; i < M; i++) {
+			Shark shark = queue.poll();
 			
 			for (int j = 1; j < 5; j++) {
+
+				for (int k = 1; k < 5; k++) {
+					shark.priorDir[j][k] = sc.nextInt();
+				}
+			}
+
+			queue.add(shark);
+			
+			map[shark.r][shark.c].add(shark);
+		}
+		
+		System.out.println(queue);
+		
+		printMap();
+
+		int time = 1;
+
+		while (time++ < 1000) {
+			for (int i = 0; i < M; i++) {
+				Shark shark = queue.poll();
+
+				int idx = shark.idx;
+				int currR = shark.r;
+				int cuurC = shark.c;
+				int dir = shark.dir;
+				int[] priorDir = shark.priorDir[dir];
 				
-				for(int k = 1; k < 5; k++) {
-					map[sharkR][sharkC].get(0).priorDir[j][k] = sc.nextInt();
+				// 앞으로 갈 방향
+				
+				for(int d = 0; d < 4; d++) {
+					int nextD = priorDir[d];
+					int nextR = shark.r + deltaR[nextD];
+					int nextC = shark.c + deltaC[nextD];
+					
+					if(isNotOutBound(nextR, nextC)) {
+						List<Shark> temp = map[nextR][nextC];
+						
+						if(visited[nextR][nextC] == 0) {
+							map[currR][cuurC].remove(0);
+							map[nextR][nextC].add(shark);
+							break;
+						} 
+					}
 				}
 			}
 		}
-		
-		System.out.println(map[sharkCoord[1][0]][sharkCoord[1][1]]);
+
+	}
+
+	private static boolean isNotOutBound(int nextR, int nextC) {
+		return nextR >= 0 && nextR < N && nextC >= 0 && nextC < N;
+	}
+
+	public static void printMap() {
+		for (int r = 0; r < N; r++) {
+			for (int c = 0; c < N; c++) {
+				System.out.print(map[r][c] + " ");
+			}
+			System.out.println();
+		}
+		System.out.println();
+	}
+
+	public static void printMap2() {
+		for (int r = 0; r < N; r++) {
+			for (int c = 0; c < N; c++) {
+				System.out.print(visited[r][c] + " ");
+			}
+			System.out.println();
+		}
+		System.out.println();
 	}
 
 }
