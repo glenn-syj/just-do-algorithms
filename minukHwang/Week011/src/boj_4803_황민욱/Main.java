@@ -1,13 +1,13 @@
 package boj_4803_황민욱;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 public class Main {
 	static int[] p;
-	static List<Integer> cycle;
+	static Set<Integer> tree;
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
@@ -22,7 +22,7 @@ public class Main {
 				break;
 
 			p = new int[V + 1];
-			cycle = new ArrayList<>();
+			tree = new HashSet<>();
 
 			for (int i = 0; i < V + 1; i++) {
 				p[i] = i;
@@ -39,48 +39,25 @@ public class Main {
 				int px = findset(edges[i][0]);
 				int py = findset(edges[i][1]);
 
-				if (px == py) {
-					cycle.add(px);
-				}
-
 				union(px, py);
 				System.out.println(Arrays.toString(p));
-				System.out.println(cycle);
 			}
 
-			for (int i = 0; i < cycle.size(); i++) {
-				for (int j = 0; j < V + 1; j++) {
-					if (p[j] == cycle.get(i)) {
-						p[j] = 0;
-					}
-				}
-			}
-
-			int[] count = new int[V + 1];
-			int total = 0;
-
-			for (int i = 0; i < V + 1; i++) {
-				if (p[i] == 0) {
-					continue;
-				}
-
-				count[p[i]]++;
-			}
-
-			for (int i = 0; i < V + 1; i++) {
-				if (count[i] > 0) {
-					total++;
+			for (int i = 1; i < V + 1; i++) {
+				int parent = findset(i);
+				if(parent > 0) {
+					tree.add(parent);
 				}
 			}
 
 			sb.append("Case ").append(t).append(": ");
 
-			if (total > 1) {
-				sb.append("A forest of ").append(total).append(" trees.").append("\n");
-			} else if (total == 1) {
+			if (tree.isEmpty()) {
+				sb.append("No trees.").append("\n");
+			} else if (tree.size() == 1) {
 				sb.append("There is one tree.").append("\n");
 			} else {
-				sb.append("No trees.").append("\n");
+				sb.append("A forest of ").append(tree.size()).append(" trees.").append("\n");
 			}
 
 			t++;
@@ -90,7 +67,14 @@ public class Main {
 	}
 
 	private static void union(int x, int y) {
-		p[y] = x;
+		if (x == y) {
+			p[y] = x;
+			p[x] = 0;
+		} else if (x < y) {
+			p[y] = x;
+		} else {
+			p[x] = y;
+		}
 	}
 
 	private static int findset(int x) {
