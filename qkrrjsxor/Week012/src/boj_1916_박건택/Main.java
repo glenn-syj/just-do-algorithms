@@ -52,7 +52,7 @@ public class Main {
             int weight = Integer.parseInt(st.nextToken());
  
             adjList.get(start).add(new Node(end, weight));
-        }
+        }//인접리스트 입력
         
         st = new StringTokenizer(br.readLine());
         int start = Integer.parseInt(st.nextToken());
