@@ -1,4 +1,4 @@
-package boj_1916_최소비용구하기;
+package boj_1916_황민욱;
 
 import java.util.ArrayList;
 import java.util.Arrays;
